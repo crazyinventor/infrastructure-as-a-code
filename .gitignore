@@ -1,0 +1,4 @@
+.terraform
+*.tfstate*
+service-account.json
+ssh_key ssh_key.pub
