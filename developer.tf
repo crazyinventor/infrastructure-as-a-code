@@ -1,5 +1,5 @@
 resource "google_dns_record_set" "crazyinventor-net-webserver-bigbro" {
-  name = "bigbro.lab.${google_dns_managed_zone.crazyinventor-net.dns_name}"
+  name = "stage.bigbro.lab.${google_dns_managed_zone.crazyinventor-net.dns_name}"
   type = "A"
   ttl  = 300
 
