@@ -1,6 +1,9 @@
 resource "google_compute_instance" "webserver" {
+
+  allow_stopping_for_update = true
+
   name         = "webserver"
-  machine_type = "f1-micro"
+  machine_type = "g1-small"
   zone         = var.google_zone
 
   tags = ["webserver"]
