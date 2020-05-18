@@ -20,7 +20,7 @@ resource "google_compute_instance" "webserver" {
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.webserver-subnetwork.self_link
+    subnetwork = google_compute_subnetwork.public-subnetwork.self_link
     access_config {
       nat_ip = google_compute_address.webserver-ip-address.address
     }
@@ -42,4 +42,12 @@ resource "google_compute_disk" "webserver-data" {
   zone  = var.google_zone
   size  = "20"
   physical_block_size_bytes = 4096
+}
+
+resource "google_compute_address" "webserver-ip-address" {
+  name         = var.project_internal_name
+  region       = var.google_region
+  depends_on    = [
+    google_compute_subnetwork.public-subnetwork
+  ]
 }

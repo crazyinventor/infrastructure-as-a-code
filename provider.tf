@@ -7,7 +7,8 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket      = "crazyinventor-terrform-states"
+    bucket      = "crazyinventor-builds"
+    prefix  = "terraform"
     credentials = "service-account.json"
   }
 }

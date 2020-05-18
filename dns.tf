@@ -1,6 +1,16 @@
+resource "google_project_service" "dns_api" {
+  project = var.google_project_name
+  service = "dns.googleapis.com"
+  disable_on_destroy = true
+}
+
 resource "google_dns_managed_zone" "davidschneider-info" {
   name        = "davidschneider-info"
   dns_name    = "davidschneider.info."
+
+  depends_on = [
+    google_project_service.dns_api
+  ]
 }
 
 resource "google_dns_record_set" "davidschneider-info-root" {
@@ -13,7 +23,8 @@ resource "google_dns_record_set" "davidschneider-info-root" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.davidschneider-info
   ]
 }
 
@@ -27,13 +38,18 @@ resource "google_dns_record_set" "davidschneider-info-webserver-www" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.davidschneider-info
   ]
 }
 
 resource "google_dns_managed_zone" "crazyinventor-net" {
   name        = "crazyinventor-net"
   dns_name    = "crazyinventor.net."
+
+  depends_on = [
+    google_project_service.dns_api
+  ]
 }
 
 resource "google_dns_record_set" "crazyinventor-net-root" {
@@ -46,7 +62,8 @@ resource "google_dns_record_set" "crazyinventor-net-root" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }
 
@@ -60,7 +77,8 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-www" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }
 
@@ -74,7 +92,8 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-bigbro" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }
 
@@ -88,7 +107,8 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-bigbro-api" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }
 
@@ -102,7 +122,8 @@ resource "google_dns_record_set" "davidschneider-info-webserver-stage-www" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }
 
@@ -116,7 +137,8 @@ resource "google_dns_record_set" "davidschneider-info-webserver-stage-db" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.davidschneider-info
   ]
 }
 
@@ -130,6 +152,7 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-service" {
   rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
 
   depends_on = [
-    google_compute_instance.webserver
+    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
   ]
 }

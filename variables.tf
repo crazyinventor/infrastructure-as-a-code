@@ -1,6 +1,6 @@
 variable "google_project_name" {
   type = string
-  default = "crazyinventor"
+  default = "crazyinventor-lab"
 }
 
 variable "google_region" {
