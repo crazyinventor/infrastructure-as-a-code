@@ -20,10 +20,9 @@ resource "google_dns_record_set" "davidschneider-info-root" {
 
   managed_zone = google_dns_managed_zone.davidschneider-info.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.davidschneider-info
   ]
 }
@@ -35,10 +34,9 @@ resource "google_dns_record_set" "davidschneider-info-webserver-www" {
 
   managed_zone = google_dns_managed_zone.davidschneider-info.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.davidschneider-info
   ]
 }
@@ -59,10 +57,9 @@ resource "google_dns_record_set" "crazyinventor-net-root" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.crazyinventor-net
   ]
 }
@@ -74,10 +71,9 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-www" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.crazyinventor-net
   ]
 }
@@ -89,10 +85,9 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-bigbro" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.crazyinventor-net
   ]
 }
@@ -104,10 +99,9 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-bigbro-api" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.crazyinventor-net
   ]
 }
@@ -119,10 +113,9 @@ resource "google_dns_record_set" "davidschneider-info-webserver-stage-www" {
 
   managed_zone = google_dns_managed_zone.davidschneider-info.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.crazyinventor-net
   ]
 }
@@ -134,10 +127,9 @@ resource "google_dns_record_set" "davidschneider-info-webserver-stage-db" {
 
   managed_zone = google_dns_managed_zone.davidschneider-info.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
     google_dns_managed_zone.davidschneider-info
   ]
 }
@@ -149,10 +141,23 @@ resource "google_dns_record_set" "crazyinventor-net-webserver-service" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
-    google_compute_instance.webserver,
+    google_dns_managed_zone.crazyinventor-net
+  ]
+}
+
+resource "google_dns_record_set" "crazyinventor-net-database" {
+  name = "database.${google_dns_managed_zone.crazyinventor-net.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.crazyinventor-net.name
+
+  rrdatas = [google_compute_address.database-ip-address.address]
+
+  depends_on = [
     google_dns_managed_zone.crazyinventor-net
   ]
 }
