@@ -155,7 +155,7 @@ resource "google_dns_record_set" "crazyinventor-net-database" {
 
   managed_zone = google_dns_managed_zone.crazyinventor-net.name
 
-  rrdatas = [google_compute_address.database-ip-address.address]
+  rrdatas = [google_compute_address.webserver-ip-address.address]
 
   depends_on = [
     google_dns_managed_zone.crazyinventor-net

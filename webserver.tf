@@ -3,10 +3,14 @@ resource "google_compute_instance" "webserver" {
   allow_stopping_for_update = true
 
   name         = "webserver"
-  machine_type = "f1-micro"
+  machine_type = "n1-standard-1"
   zone         = var.google_zone
 
-  tags = ["webserver"]
+  tags = [
+    "database",
+    "gcloud",
+    "webserver"
+  ]
 
   boot_disk {
     initialize_params {
